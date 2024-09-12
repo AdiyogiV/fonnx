@@ -32,6 +32,25 @@ class MethodChannelFonnx extends FonnxPlatform {
     return Float32List.fromList(cast);
   }
   
+  @override
+  Future<Float32List?> runOnnxModel({
+    required String modelPath,
+    required List<int> inputData,
+    required List<int> inputShape,
+    required List<int> outputShape,
+  }) async {
+    final result = await methodChannel.invokeMethod<Float32List>(
+      'runOnnxModel',
+      {
+        'modelPath': modelPath,
+        'inputData': inputData,
+        'inputShape': inputShape,
+        'outputShape': outputShape,
+      },
+    );
+    return result;
+  }
+}
   /// Create embeddings for [inputs].
   /// Inputs are BERT tokens. Use [WordpieceTokenizer] to convert a [String].
   @override
